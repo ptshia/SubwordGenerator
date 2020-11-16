@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace SubwordGenerator.Infrastructure
 {
-    public class OxfordDictionaryConnector
+    public class DictionaryConnector
     {
-        public OxfordDictionaryConnector()
+        public DictionaryConnector()
         {
 
         }

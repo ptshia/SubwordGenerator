@@ -19,23 +19,21 @@ namespace SubwordGenerator
 				root.InsertIntoTrie(root, words[i]);
 			}
 
-			Console.WriteLine("Subword generator is now up! Input your letters");
+            Console.WriteLine("Subword generator is now up! Input your letters");
 			var inputString = Console.ReadLine();
 			Console.WriteLine("Enter the minimum number of letters you want in a word");
 			int.TryParse(Console.ReadLine(), out int minLength);
 			Console.WriteLine("Do you want the dictionary feature?");
 			var dictionaryFlagInput = Console.ReadLine();
 
-			char[] inputLetters = inputString.ToCharArray();
-			int inputLength = inputLetters.Length;
-
+			int inputLength = inputString.Length;
 			bool dictionaryFlag = false;
 			if (dictionaryFlagInput == "Y" || dictionaryFlagInput == "y")
 			{
 				dictionaryFlag = true;
 			}
 			WordsGenerator wordsGenerator = new WordsGenerator();
-			wordsGenerator.PrintAllWords(inputLetters, root, inputLength, minLength, dictionaryFlag);
+			wordsGenerator.PrintAllWords(inputString, root, inputLength, minLength, dictionaryFlag);
 		}
 	}
 }

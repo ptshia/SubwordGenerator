@@ -4,12 +4,7 @@ using Newtonsoft.Json.Linq;
 namespace SubwordGenerator.Infrastructure
 {
     public class DictionaryConnector
-    {
-        public DictionaryConnector()
-        {
-
-        }
-
+    { 
         public string SearchDefinition(string word)
         {
             try

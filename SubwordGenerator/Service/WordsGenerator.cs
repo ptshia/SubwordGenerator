@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using SubwordGenerator.Infrastructure;
 
 namespace SubwordGenerator.Service
@@ -9,7 +7,7 @@ namespace SubwordGenerator.Service
 	{
 		private static readonly int size = 26;
 
-		public void PrintAllWords(string inputString, TrieNode root, int inputLength, int minLength, bool dictionaryFlag)
+		public void FindAllWords(string inputString, TrieNode root, int inputLength, int minLength, string mandatoryInput)
 		{
 			char[] inputLetters = inputString.ToCharArray();
 			bool[] hasFlag = new bool[size];
@@ -25,42 +23,35 @@ namespace SubwordGenerator.Service
 				if (hasFlag[i] == true && trie.Child[i] != null)
 				{
 					str += (char)(i + 'a');
-					SearchWord(trie.Child[i], hasFlag, str, minLength, dictionaryFlag, inputString);
+					SearchWord(trie.Child[i], hasFlag, str, minLength, inputString, mandatoryInput);
 					str = "";
 				}
 			}
 		}
 
-		private void SearchWord(TrieNode root, bool[] hasFlag, string str, int minLength, bool dictionaryFlag, string inputString)
+		private void SearchWord(TrieNode root, bool[] hasFlag, string str, int minLength, string inputString, string mandatoryInput)
 		{
-			FilterWord(root, str, minLength, dictionaryFlag, inputString);
+			FilterWord(root, str, minLength, inputString, mandatoryInput);
 			for (int i = 0; i < size; i++)
 			{
 				if (hasFlag[i] == true && root.Child[i] != null)
 				{
 					char c = (char)(i + 'a');
-					SearchWord(root.Child[i], hasFlag, str + c, minLength, dictionaryFlag, inputString);
+					SearchWord(root.Child[i], hasFlag, str + c, minLength, inputString, mandatoryInput);
 				}
 			}
 		}
 
-		private void FilterWord(TrieNode root, string str, int minLength, bool dictionaryFlag, string inputString)
+		private void FilterWord(TrieNode root, string str, int minLength, string inputString, string mandatoryInput)
 		{
 			if (root.leaf == true && str.Length >= minLength)
 			{
 				var isEqual = LetterOccuranceChecker(inputString, str);
-				if (isEqual)
+				if (isEqual && str.Contains(mandatoryInput))
 				{
-					if (dictionaryFlag)
-					{
-						var connector = new DictionaryConnector();
-						string definition = connector.SearchDefinition(str);
-						Console.WriteLine("Word: " + str + " - Meaning: " + definition);
-					}
-					else
-					{
-						Console.WriteLine("Word: " + str);
-					}
+					var connector = new DictionaryConnector();
+					string definition = connector.SearchDefinition(str);
+					Console.WriteLine(str + " : " + definition);
 				}
 			}
 		}
